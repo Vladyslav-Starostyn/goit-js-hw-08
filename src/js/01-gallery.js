@@ -2,6 +2,10 @@
 import { galleryItems } from './gallery-items';
 // Change code below this line
 
+import SimpleLightbox from 'simplelightbox';
+
+import 'simplelightbox/dist/simple-lightbox.min.css';
+
 console.log(galleryItems);
 
 const galleryEl = document.querySelector('.gallery');
@@ -17,7 +21,6 @@ function createItemMarkup(items) {
           <img
             class="gallery__image"
             src="${preview}"
-            data-source="${original}"
             alt="${description}"
           />
         </a>
@@ -26,24 +29,6 @@ function createItemMarkup(items) {
     .join('');
 }
 
-galleryEl.addEventListener('click', onItemClick);
-
-function onItemClick(event) {
-  event.preventDefault();
-
-  if (event.target.nodeName !== 'IMG') {
-    return;
-  }
-
-  const instance = basicLightbox.create(`
-    <img src="${event.target.dataset.source}" width="800" height="600">
-`);
-
-  instance.show();
-
-  galleryEl.addEventListener('keydown', event => {
-    if (event.key === 'Escape') {
-      instance.close();
-    }
-  });
-}
+new SimpleLightbox('.gallery a', {
+  captionDelay: 250,
+});
