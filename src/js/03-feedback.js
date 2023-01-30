@@ -1,24 +1,26 @@
 import throttle from 'lodash.throttle';
 
-const form = document.querySelector('.feedback-form');
-const email = document.querySelector('input[name="email"]');
-const message = document.querySelector('textarea[name="message"]');
+const refs = {
+  formEl: document.querySelector('.feedback-form'),
+  emailEl: document.querySelector('input[name="email"]'),
+  messageEl: document.querySelector('textarea[name="message"]'),
+};
 const LOCALSTORAGE_KEY = 'feedback-form-state';
 
-form.addEventListener('input', throttle(onFormInput, 500));
-form.addEventListener('submit', onFormSubmit);
+refs.formEl.addEventListener('input', throttle(onFormInput, 500));
+refs.formEl.addEventListener('submit', onFormSubmit);
 
 function onFormInput(event) {
   localStorage.setItem(
     LOCALSTORAGE_KEY,
-    JSON.stringify({ email: email.value, message: message.value })
+    JSON.stringify({ email: refs.emailEl.value, message: refs.messageEl.value })
   );
 }
 
 function onFormSubmit(event) {
   event.preventDefault();
-  console.log({ email: email.value, message: message.value });
-  form.reset();
+  console.log({ email: refs.emailEl.value, message: refs.messageEl.value });
+  refs.formEl.reset();
   localStorage.removeItem(LOCALSTORAGE_KEY);
 }
 
@@ -33,6 +35,6 @@ const load = key => {
 
 const storageData = load(LOCALSTORAGE_KEY);
 if (storageData) {
-  email.value = storageData.email;
-  message.value = storageData.message;
+  refs.emailEl.value = storageData.email;
+  refs.messageEl.value = storageData.message;
 }
