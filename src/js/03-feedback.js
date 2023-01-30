@@ -7,9 +7,11 @@ const LOCALSTORAGE_KEY = 'feedback-form-state';
 
 form.addEventListener(
   'input',
-  throttle(e => {
-    const objectToSave = { email: email.value, message: message.value };
-    localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(objectToSave));
+  throttle(event => {
+    localStorage.setItem(
+      LOCALSTORAGE_KEY,
+      JSON.stringify({ email: email.value, message: message.value })
+    );
   }, 500)
 );
 
