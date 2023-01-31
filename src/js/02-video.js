@@ -12,4 +12,8 @@ player.on(
   }, 1000)
 );
 
-player.setCurrentTime(localStorage.getItem(PLAYER_KEY) || 0);
+player
+  .setCurrentTime(localStorage.getItem(PLAYER_KEY) || 0)
+  .catch(function (error) {
+    console.error(error);
+  });
